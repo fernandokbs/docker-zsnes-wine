@@ -2,11 +2,10 @@ FROM solarkennedy/wine-x11-novnc-docker
 
 RUN apt update && apt install zsnes -y
 
-COPY download_gecko_and_mono.sh /root/download_gecko_and_mono.sh
-RUN chmod +x /root/download_gecko_and_mono.sh \
-    && /root/download_gecko_and_mono.sh "$(wine --version | sed -E 's/^wine-//')"
+COPY ./fceux.deb /root
+COPY ./super.zip /root
 
-COPY ./mario.zip /root
+RUN apt install /root/fceux.deb -y
 
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
